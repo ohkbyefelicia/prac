@@ -2,24 +2,17 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 orbs:
-    node: circleci/node84.7.0
+  node: circleci/node@4.7.0
+
 jobs:
-    build:
-          executor:
-            name: node/default
-            tag: '10.4'
-            steps:
-              - checkout
-              - node/with-cache:
-                key: edge
-              -run: 
-                name: Install dependencies
-                command: npm install
-              -run:
-                name: Run tests
-                command: npm run test
-              
-              
+  build:
+    executor:
+      name: node/default
+      tag: '10.4'
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm run test
